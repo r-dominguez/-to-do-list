@@ -1,8 +1,9 @@
 source "https://rubygems.org"
  
 gem "devise", "4.9.4"
-# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "8.0.2"
+gem 'rails_admin', '3.3'
+gem "ransack", "~> 4.0" 
 gem "propshaft"
 gem "pg", "1.5"
 gem "puma", "6.6"
@@ -52,6 +53,11 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
+  gem 'factory_bot_rails', "6.5"
+  gem 'faker', "3.5.2"
+  gem 'rspec-rails', "8.0.1"
   gem "selenium-webdriver"
 end
 
+
+gem "cssbundling-rails"
