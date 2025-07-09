@@ -18,7 +18,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
     describe 'validations' do
         it 'validar precensia de datos' do
-            expect validate_presence_of(:email) 
+            expect validate_presence_of(:email)
         end
         it 'validates email format' do
             # Testea formato de email (Devise ya valida presencia y unicidad)

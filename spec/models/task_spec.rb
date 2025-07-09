@@ -13,14 +13,14 @@ RSpec.describe Task, type: :model do
 
   it 'When titles longer than 100 characters' do
     task = build(:task, title: 'a' * 101)
-    
+
     expect(task).not_to be_valid
     expect(task.errors[:title]).to include('is too long (maximum is 100 characters)')
   end
 
   it 'When description longer than 100 characters' do
     task = build(:task, description: 'a' * 1001)
-    
+
     expect(task).not_to be_valid
     expect(task.errors[:description]).to include('is too long (maximum is 1000 characters)')
   end
@@ -32,16 +32,14 @@ RSpec.describe Task, type: :model do
   describe '.completed' do
     it 'When task is complete' do
       completed_task = create(:task, completed: true)
-      expect(Task.completed).to eq([completed_task])
+      expect(Task.completed).to eq([ completed_task ])
     end
     it 'When task is incomplete' do
       incomplete_task = create(:task, completed: false)
-      expect(Task.completed).to_not eq([incomplete_task])
+      expect(Task.completed).to_not eq([ incomplete_task ])
     end
     it 'validate scope exist' do
       expect(Task).to respond_to(:completed)
     end
   end
-
-
 end

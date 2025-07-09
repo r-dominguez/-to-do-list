@@ -3,7 +3,7 @@ class Task < ApplicationRecord
 
   validates :title, :description, presence: true
   validates :title, length: { maximum: 100 }
-  validates :description, length: { maximum: 1000}
+  validates :description, length: { maximum: 1000 }
 
   scope :completed, -> { where(completed: true) }
 
