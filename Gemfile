@@ -46,7 +46,7 @@ group :development, :test do
   gem 'faker', '3.5.2'
   gem 'rails-controller-testing', '1.0.5'
   gem 'rspec-rails', '8.0.1'
-  gem 'rubocop', '1.75.2'
+  gem 'rubocop', '1.78.0'
   gem 'rubocop-capybara', '2.22.1'
   gem 'rubocop-performance', '1.25'
   gem 'rubocop-rails', '2.32'
