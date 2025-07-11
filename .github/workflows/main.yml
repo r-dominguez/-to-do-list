@@ -1,0 +1,77 @@
+name: App Tests 🧪
+
+on: [push]
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y libcurl4-openssl-dev
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+      - name: Rubocop
+        run: bundle exec rubocop db/schema.rb  app/ lib/ spec/ Gemfile
+
+  rspec:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: rails_github_actions
+          POSTGRES_DB: rails_github_actions_test
+          POSTGRES_PASSWORD: postgres
+          SIDEKIQ_USERNAME: admin
+          SIDEKIQ_PASSWORD: admin
+          SENDGRID_MAIL_ADDRESS: admin@these.com.uy
+          SENDGRID_MAIL_NO_REPLY: admin@these.com.uy
+          PAGINATE_PRODUCT_PER: 12
+        ports: [ "5432:5432" ]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install libcurl4-openssl-dev
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          POSTGRES_DB: rails_github_actions_test
+          POSTGRES_USER: rails_github_actions
+          POSTGRES_PASSWORD: postgres
+          SIDEKIQ_USERNAME: admin
+          SIDEKIQ_PASSWORD: admin
+          SENDGRID_MAIL_ADDRESS: admin@these.com.uy
+          SENDGRID_MAIL_NO_REPLY: admin@these.com.uy
+          PAGINATE_PRODUCT_PER: 12
+        run: |
+          cp config/database.ci.yml config/database.yml
+          bundle exec rails db:create db:migrate RAILS_ENV=test
+      - name: RSpec tests
+        env:
+          PGHOST: localhost
+          POSTGRES_DB: rails_github_actions_test
+          POSTGRES_USER: rails_github_actions
+          POSTGRES_PASSWORD: postgres
+          SIDEKIQ_USERNAME: admin
+          SIDEKIQ_PASSWORD: admin
+          SENDGRID_MAIL_ADDRESS: admin@these.com.uy
+          SENDGRID_MAIL_NO_REPLY: admin@these.com.uy
+          PAGINATE_PRODUCT_PER: 12
+          PGPORT: ${{ job.services.postgres.ports[5432] }}
+          RAILS_ENV: test
+        run: bundle exec rspec spec

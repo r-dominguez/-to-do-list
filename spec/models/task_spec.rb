@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  it "When task is valid with valid attributes" do
+  it 'When task is valid with valid attributes' do
     task = build(:task)
     expect(task).to be_valid
   end
 
-  it "When task is invalid without a title" do
+  it 'When task is invalid without a title' do
     task = build(:task, title: nil)
     expect(task).not_to be_valid
   end
@@ -26,20 +26,22 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'associations' do
-    it { should belong_to(:user) }
+    it { is_expected.to belong_to(:user) }
   end
 
   describe '.completed' do
     it 'When task is complete' do
       completed_task = create(:task, completed: true)
-      expect(Task.completed).to eq([ completed_task ])
+      expect(described_class.completed).to eq([completed_task])
     end
+
     it 'When task is incomplete' do
       incomplete_task = create(:task, completed: false)
-      expect(Task.completed).to_not eq([ incomplete_task ])
+      expect(described_class.completed).not_to eq([incomplete_task])
     end
+
     it 'validate scope exist' do
-      expect(Task).to respond_to(:completed)
+      expect(described_class).to respond_to(:completed)
     end
   end
 end

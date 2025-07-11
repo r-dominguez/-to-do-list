@@ -1,8 +1,110 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+  - rubocop-capybara
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+AllCops:
+  NewCops: enable
+  Exclude:
+    - bin/**/**
+    - vendor/**/**
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - spec/**/*.rb
+    - db/schema.rb
+    - config/environments/*.rb
+    - config/routes.rb
+    - config/initializers/rails_admin.rb
+    - db/queue_schema.rb
+    - db/schema.rb
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: true
+  Exclude:
+    - spec/**/*.rb
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: true
+  Exclude:
+    - db/**/*.rb
+
+Lint/MissingSuper:
+  Enabled: false
+
+Lint/EmptyBlock:
+    Enabled: true
+    Exclude:
+      - config/**/*.rb
+
+Lint/EmptyFile:
+    Enabled: true
+    Exclude:
+      - config/**/*.rb
+      - db/seeds.rb
+
+Metrics/AbcSize:
+  Enabled: true
+
+Rails/NotNullColumn:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: true
+  Exclude:
+    - spec/**/*.rb
+
+Rails/ReversibleMigration:
+  Enabled: true
+
+Lint/TopLevelReturnWithArgument:
+  Enabled: true
+
+Rails/FilePath:
+  Enabled: false
+
+RSpec/EmptyExampleGroup:
+  Enabled: true
+
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+RSpec/VariableName:
+  Enabled: true
+
+RSpec/ScatteredSetup:
+  Enabled: true
+
+RSpec/LetSetup:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Lint/ShadowingOuterLocalVariable:
+  Exclude:
+    - 'spec/rails_helper.rb'
+    - 'spec/spec_helper.rb'
