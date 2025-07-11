@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :tasks, dependent: :destroy
-  # def admins!
-  #   update!(completed: true)
-  # end
+
+  scope :admins, -> { where(admin: true) }
+
 end
